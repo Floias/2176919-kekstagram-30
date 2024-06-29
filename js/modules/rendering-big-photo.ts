@@ -1,5 +1,6 @@
 import {pressesKeydown} from '../utils/utils';
 import {Comment} from './drawing-thumbnails';
+import { BASE_URL } from './communication';
 
 const bigPicture: HTMLElement | null = document.querySelector('.big-picture');
 const bigComments: HTMLElement | null = bigPicture && bigPicture.querySelector('.social__comments');
@@ -59,7 +60,7 @@ export const createBigPhoto = (url: string, likes: number, comments: Comment[], 
   const bigCommentsCount: HTMLSpanElement | null = bigPicture && bigPicture.querySelector('.social__comment-total-count');
   const bigPictureDescription: HTMLElement | null = bigPicture && bigPicture.querySelector('.social__caption');
   if (bigPictureImg && bigPictureLikes && bigCommentsCount && bigPictureDescription) {
-    bigPictureImg.src = url;
+    bigPictureImg.src = BASE_URL + url;
     bigPictureLikes.textContent = `${likes}`;
     bigCommentsCount.textContent = `${comments.length}`;
     bigPictureDescription.textContent = description;

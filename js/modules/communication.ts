@@ -4,10 +4,10 @@ import {closeImageSelection, setFormSubmit} from './form';
 import {showsDataError, hidesDataError, showsSuccess} from './message'
 import {initFilter} from './filters'
 
-const BASE_URL = 'https://30.javascript.pages.academy/kekstagram';
+export const BASE_URL = 'https://training-server-rf5n.onrender.com/';
 const Route = {
-  GET_DATA: '/data',
-  SEND_DATA: '/',
+  GET_DATA: 'kekstagram/posts',
+  SEND_DATA: 'kekstagram/posts',
 };
 const Method = {
   GET: 'GET',

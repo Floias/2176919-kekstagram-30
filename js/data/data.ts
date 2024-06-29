@@ -1,1 +1,1 @@
-export const PHOTO_COUNT:number = 25;
+export const PHOTO_COUNT:number = 26;
