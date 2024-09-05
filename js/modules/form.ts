@@ -9,15 +9,15 @@ const loadingImage: HTMLElement | null = document.querySelector('.img-upload');
 const imageEditingForm: HTMLElement | null = loadingImage && loadingImage.querySelector('.img-upload__overlay');
 const imageSelection: HTMLInputElement | null = loadingImage && loadingImage.querySelector('.img-upload__input');
 const imageCancel: HTMLElement | null = loadingImage && loadingImage.querySelector('.img-upload__cancel');
-const imageForm: HTMLElement | null = loadingImage && loadingImage.querySelector('.img-upload__form');
-const hashtagInput: HTMLInputElement | null = imageForm && imageForm.querySelector('.text__hashtags');
-const descriptionInput: HTMLInputElement | null = imageForm && imageForm.querySelector('.text__description');
-export const submitButton: HTMLButtonElement | null = document.querySelector('.img-upload__submit');
+const imageForm: HTMLFormElement = document.querySelector('.img-upload__form') as HTMLFormElement;
+const hashtagInput: HTMLInputElement | null = imageForm && imageForm.querySelector('.text__hashtags') as HTMLInputElement;
+const descriptionInput: HTMLInputElement = imageForm && imageForm.querySelector('.text__description') as HTMLInputElement;
+export const submitButton: HTMLButtonElement = document.querySelector('.img-upload__submit') as HTMLButtonElement;
 const nonEffects: HTMLInputElement | null = document.querySelector('#effect-none');
 
-const clearsForm = () => {
+const clearsForm = (): void => {
   if (imageForm && nonEffects) {
-    imageForm.reset();
+    (imageForm as HTMLFormElement).reset();
     clearsEffects();
     nonEffects.checked = true;
     pristine.reset();
@@ -98,26 +98,26 @@ const getHashtagsErrorMessage = () => {
 
 const validateDescription = (value: string) => value.length <= 140;
 
-const pristine = new Pristine(imageForm, {
+const pristine: Pristine = imageForm && new Pristine(imageForm as HTMLFormElement, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper--error',
 });
 
-pristine.addValidator(hashtagInput, validateHashtags, getHashtagsErrorMessage);
-pristine.addValidator(descriptionInput, validateDescription, 'длина комментария больше 140 символов.');
+pristine?.addValidator(hashtagInput, validateHashtags, getHashtagsErrorMessage());
+pristine?.addValidator(descriptionInput, validateDescription, 'длина комментария больше 140 символов.');
 
-export const setFormSubmit = (onSuccess) => {
+export const setFormSubmit = (onSuccess: () => void): void => {
   imageForm && imageForm.addEventListener('submit', (evt: SubmitEvent) => {
     evt.preventDefault();
-    const isValid: Function = pristine.validate();
+    const isValid: boolean = pristine.validate();
     if (isValid && submitButton) {
       submitButton.disabled = true;
-      sendData(new FormData(evt.target))
+      sendData(new FormData(evt.target as HTMLFormElement))
       .then(onSuccess)
       .then(clearsForm)
       .catch(showsSendingError)
-      .finally(submitButton.disabled = false);
+      .finally(() => submitButton.disabled = false);
     }
   });
 }

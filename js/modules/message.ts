@@ -6,7 +6,12 @@ const success: HTMLElement | null = templateSuccess && templateSuccess.content.q
 const templateSendingError: HTMLTemplateElement | null = document.querySelector('#error');
 const sendingErrorContainer: HTMLElement | null = templateSendingError && templateSendingError.content.querySelector('.error');
 
-const showMessage = (element: HTMLElement | null, buttonClass: string) => {
+type ShowMessageParams = {
+  element: HTMLElement | null;
+  buttonClass: string;
+};
+
+const showMessage = ({ element, buttonClass }: ShowMessageParams): void => {
   if (element) {
     document.body.append(element);
   }
@@ -16,8 +21,8 @@ const showMessage = (element: HTMLElement | null, buttonClass: string) => {
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
-const hideMessage = () => {
-  const existItem = document.querySelector('.success') || document.querySelector('.error');
+const hideMessage = (): void => {
+  const existItem: HTMLElement | null = document.querySelector('.success') || document.querySelector('.error');
   existItem?.remove();
   document.removeEventListener('keydown', onMessageKeydown);
   document.addEventListener('keydown', onDocumentKeydown);
@@ -29,19 +34,19 @@ const onCloseButtonClick = () => {
   hideMessage();
 }
 
-export const showsSuccess = () => {
-  showMessage(success, '.success__button');
+export const showsSuccess = (): void => {
+  showMessage({ element: success, buttonClass: '.success__button' });
 };
 
 export const showsSendingError = () => {
-  showMessage(sendingErrorContainer, '.error__button');
+  showMessage({element: sendingErrorContainer, buttonClass: '.error__button'});
   submitButton.disabled = true;
 };
 
 const onMessageKeydown = pressesKeydown(hideMessage);
 
 const onBodyClick = (evt: Event) => {
-  if (evt.target?.closest('.success__inner') || evt.target?.closest('.error__inner')) {
+  if ((evt.target as HTMLElement)?.closest('.success__inner') || (evt.target as HTMLElement)?.closest('.error__inner')) {
     return;
   }
   hideMessage();

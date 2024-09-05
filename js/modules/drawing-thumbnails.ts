@@ -1,5 +1,4 @@
 import {createBigPhoto} from './rendering-big-photo';
-import { BASE_URL } from './communication';
 
 const template: HTMLTemplateElement | null = document.querySelector('#picture');
 const templatePicture: HTMLElement | null = template && template.content.querySelector('.picture');
@@ -28,7 +27,7 @@ export const drawingThumbnails = (thumbnails: Photo[]) => {
     const pictureLikes: HTMLSpanElement | null = picture.querySelector('.picture__likes');
     const pictureComments: HTMLSpanElement | null = picture.querySelector('.picture__comments');
     if (pictureImg && pictureLikes && pictureComments) {
-      pictureImg.src = BASE_URL + url;
+      pictureImg.src = url;
       pictureImg.alt = description;
       pictureLikes.textContent = `${likes}`;
       pictureComments.textContent = `${comments.length}`;

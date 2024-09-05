@@ -1,5 +1,7 @@
 const TIMEOUT = 500;
-export const getRandomInteger = (a:number, b:number) => {
+type Callback = (...args: any[]) => void;
+
+export const getRandomInteger = (a:number = 1, b:number = 500) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
   const result = Math.random() * (upper - lower + 1) + lower;
@@ -18,10 +20,12 @@ export const pressesKeydown = (handler: Function) => {
   };
 };
 
-export const debounce = (callback, timeoutDelay = TIMEOUT) => {
-  let timeoutId;
-  return (...rest) => {
-    clearTimeout(timeoutId);
+export const debounce = (callback: Callback, timeoutDelay: number = TIMEOUT): Callback => {
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
+  return (...rest: Parameters<Callback>): void => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
 }

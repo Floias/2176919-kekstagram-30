@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "@jest/globals": "29.7.0",
+    "@types/nouislider": "^15.0.0",
     "eslint": "8.48.0",
     "eslint-config-htmlacademy": "9.1.1",
     "jest-environment-jsdom": "29.7.0",

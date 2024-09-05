@@ -1,8 +1,8 @@
 import * as noUiSlider from 'nouislider';
-import 'nouislider/dist/nouislider.css';
+//import 'nouislider/dist/nouislider.css';
 
 const effectLevel: HTMLElement | null = document.querySelector('.img-upload__effect-level');
-const effectLevelSlider: HTMLElement | null = effectLevel && effectLevel.querySelector('.effect-level__slider');
+const effectLevelSlider: HTMLFormElement | null = effectLevel && effectLevel.querySelector('.effect-level__slider');
 const effectLevelValue: HTMLInputElement | null = effectLevel && effectLevel.querySelector('.effect-level__value');
 const imgUploadPreview: HTMLElement | null = document.querySelector('.img-upload__preview img');
 const effects: HTMLElement | null = document.querySelector('.effects__list');
@@ -30,7 +30,7 @@ if (effectLevel && effectLevelSlider && effectLevelValue && imgUploadPreview && 
   let effect: string;
   let units: string;
 
-  effectLevelSlider.noUiSlider.on('update', () => {
+  (effectLevelSlider as HTMLFormElement).noUiSlider.on('update', () => {
     effectLevelValue.value = `${Number(effectLevelSlider.noUiSlider.get())}`;
     imgUploadPreview.style.filter = effect + effectLevelValue.value + units + ')';
   });
@@ -52,7 +52,8 @@ if (effectLevel && effectLevelSlider && effectLevelValue && imgUploadPreview && 
   };
 
   effects.addEventListener('change', (evt) => {
-    switch(evt.target.value) {
+    const target = evt.target as HTMLInputElement | null;
+    switch(target?.value) {
       case 'chrome':
         resetsSettings();
         effect = 'grayscale(';

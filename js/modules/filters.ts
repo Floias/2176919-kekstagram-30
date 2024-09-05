@@ -19,17 +19,17 @@ const clearsOldThumbnails = () => {
 };
 
 const handleFilterClick = (evt: Event) => {
-  if (evt.target?.closest('#filter-default')) {
+  if ((evt.target as HTMLElement)?.closest('#filter-default')) {
     replacesActivity(defaultButton);
     filteringMethod = showDefault;
     return;
   }
-  if (evt.target?.closest('#filter-random')) {
+  if ((evt.target as HTMLElement)?.closest('#filter-random')) {
     replacesActivity(randomButton);
     filteringMethod = showRandom;
     return;
   }
-  if (evt.target?.closest('#filter-discussed')) {
+  if ((evt.target as HTMLElement)?.closest('#filter-discussed')) {
     replacesActivity(discussedButton);
     filteringMethod = showDiscussed;
     return;
